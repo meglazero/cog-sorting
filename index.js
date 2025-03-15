@@ -1,9 +1,3 @@
-/*const node = document.createElement("p");
-const textnode = document.createTextNode("Potato");
-
-node.appendChild(textnode);
-document.getElementsByClassName("standard")[0].appendChild(node);*/
-
 /* Cog Info Dump
 "CogM": "{\"0\":{\"d\":147},\"1\":{\"d\":111,\"a\":1166},\"2\":{\"d\":110,\"a\":284}}
 0-95 is cogs, 96-107 is characters sitting in cog shelf, 108+ is created cogs sitting in shelf
@@ -35,4 +29,37 @@ cogs:
     Ulti Broken Cog: Cog3A00
     Ulti Double Cog: Cog3B0
     Ulti Left Directional Cog: Cog3le
+
+IT/IE JSON is an object, IT will always be JSON.data.[info], IE always be JSON.[info]
+(in this case, info would be CogsO or CogsM)
 */
+
+function storeJson() {
+    const input = jsonTextBox.value;
+    jsonSidebar.toggleAttribute("hidden");
+    alert(input);
+};
+
+function attributeExists(element, input) {
+    try {
+        if(element.getAttribute(input) != null) {
+            return true;
+        }
+        //console.log(element.getAttribute(input))
+    } catch {
+        return false;
+    }
+};
+
+const jsonSidebar = document.getElementById("sidebar");
+const jsonTextBox = document.getElementById("json-input");
+const jsonButton = document.getElementById('json-submit-button');
+jsonButton.addEventListener('click', storeJson, false);
+window.addEventListener("keyup", (e) => {
+    //console.log(e);
+    if (e.key === "Escape" && attributeExists(jsonSidebar, "hidden")) {
+        jsonSidebar.toggleAttribute("hidden");
+    } else {
+        return;
+    };
+});
