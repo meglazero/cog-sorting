@@ -13,7 +13,7 @@ cogs:
         diagonal: (di) + turned 45 degrees
     a: build rate
     c: flaggy rate
-    d: bonus construct exp
+    d: Exp
     e: directional build rate
     f: directional exp bonus
     l: not really sure, it is only on the p2w excogia cogs though, whether connected or not
@@ -34,10 +34,139 @@ IT/IE JSON is an object, IT will always be JSON.data.[info], IE always be JSON.[
 (in this case, info would be CogsO or CogsM)
 */
 
+function processBonuses(element,i) {
+    console.log("got into process bonuses");
+    let count = 0;
+    let bonusA = false;
+    let bonusC = false;
+    const TESTING = false
+
+    if(TESTING){
+        console.log(i)
+        console.log(cogsM[i])
+    }
+
+    try {
+        if(cogsM[i].a > 0) {
+            console.log("a count++")
+            count++;
+            bonusA = true;
+        };
+    } catch {
+        console.log("Failed finding bonus a")
+    }
+    try {
+        if(cogsM[i].c > 0) {
+            console.log("c count++")
+            count++;
+            bonusC = true;
+        };
+    } catch {
+        console.log("Failed finding bonus b")
+    }
+    try {
+        if(cogsM[i].d > 0) {
+            console.log("d count++")
+            count++;
+        };
+    } catch {
+        console.log("Failed finding bonus c")
+    }
+    console.log("Count is: " + count)
+    if(count >= 1) {
+        console.log("entered count 1")
+        cogBonus1 = element.getElementById('cog-bonus-1');
+
+        console.log(cogBonus1);
+        if(bonusA){
+            console.log("bonusA existed: " + cogsM[i].a)
+            cogBonus1.innerText = cogsM[i].a + " BR";
+            //console.log(cogBonus1.innerText);
+        } else if (bonusC) {
+            console.log("bonusC existed: " + cogsM[i].c)
+            cogBonus1.innerText = cogsM[i].c + " Flag";
+            bonusC = false;
+        } else {
+            console.log("must've been bonus D: " + cogsM[i].d)
+            cogBonus1.innerText = cogsM[i].d + "% Exp";
+            //console.log(cogBonus1.innerText)
+        }
+    };
+    if(count >= 2) {
+        console.log("entered count 2")
+        cogBonus2 = element.getElementById('cog-bonus-2');
+        if(bonusC) {
+            console.log("bonusC existed: " + cogsM[i].c)
+            cogBonus2.textContent = cogsM[i].c + " Flag";
+        } else {
+            console.log("must've been bonus D: " + cogsM[i].d)
+            cogBonus2.innerText = cogsM[i].d + "% Exp";
+        };
+    };
+    if(count === 3) {
+        console.log("can only be bonus D: " + cogsM[i].d);
+        cogBonus3 = element.getElementById('cog-bonus-3');
+        cogBonus3.innerText = cogsM[i].d + "% Exp"
+    };
+    console.log("end of process bonuses");
+}
+
+function processJSONCogList() {
+    const cogList = document.getElementById('cog-list');
+    const cogListTemplate = document.getElementById('cog-list-template');
+
+    for(let i = 0; i < 96; i++) {
+        const cogListElement = document.importNode(cogListTemplate.content, true);
+        cogImage = cogListElement.getElementById('cog-image');
+        cogDirectional = cogListElement.getElementById('directional-bonus');
+        cogLocation = cogListElement.getElementById('cog-location');
+
+        //strI = i.toString()
+
+        processBonuses(cogListElement,i);
+        console.log("past process bonuses")
+
+        cogList.appendChild(cogListElement);
+    }
+};
+
+function verifyJSON(JSON) {
+
+};
+
+let input = localStorage.getItem('input');
+let cogsO = localStorage.getItem('cogsO');
+let cogsM = localStorage.getItem('cogsM');
+
 function storeJson() {
-    const input = jsonTextBox.value;
-    jsonSidebar.toggleAttribute("hidden");
-    alert(input);
+    const errorMessage = document.getElementById("error-message");
+    input = jsonTextBox.value;
+    try {
+        const parsedInput = JSON.parse(input);
+        //console.log(parsedInput)
+        //console.log(parsedInput.data.CogM);
+        //console.log(parsedInput.data.CogO);
+
+        if(!('data' in parsedInput)) {
+            cogsO = JSON.parse(parsedInput.CogO);
+            cogsM = JSON.parse(parsedInput.CogM);
+        } else {
+            cogsO = JSON.parse(parsedInput.data.CogO);
+            cogsM = JSON.parse(parsedInput.data.CogM);
+        };
+        
+        if(attributeExists(errorMessage, "hidden")) {
+            errorMessage.toggleAttribute("hidden");
+        };
+        jsonSidebar.toggleAttribute("hidden");
+        processJSONCogList();
+        //console.log("CogO: " + cogsO + "\n\n\nCogM: " + cogsM)
+    } catch {
+        if(errorMessage.hasAttribute("hidden")){
+            errorMessage.toggleAttribute("hidden");
+        };
+    };
+    //alert(input);
 };
 
 function attributeExists(element, input) {
@@ -45,7 +174,6 @@ function attributeExists(element, input) {
         if(element.getAttribute(input) != null) {
             return true;
         }
-        //console.log(element.getAttribute(input))
     } catch {
         return false;
     }
@@ -56,7 +184,6 @@ const jsonTextBox = document.getElementById("json-input");
 const jsonButton = document.getElementById('json-submit-button');
 jsonButton.addEventListener('click', storeJson, false);
 window.addEventListener("keyup", (e) => {
-    //console.log(e);
     if (e.key === "Escape" && attributeExists(jsonSidebar, "hidden")) {
         jsonSidebar.toggleAttribute("hidden");
     } else {

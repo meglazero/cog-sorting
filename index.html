@@ -12,6 +12,7 @@
                 <span>Paste JSON Here:</span>
                 <input type="text" name="json-input" id="json-input">
                 <input type="submit" value="Submit" id="json-submit-button">
+                <p id="error-message" hidden>Please enter valid JSON from Efficiency or Toolbox</p>
             </form>
         </div>
     </div>
@@ -19,7 +20,7 @@
     <h3>Mostly for mid-late game players to more easily sort and locate cogs on your board</h3>
 
     <div class="cog-panels">
-        <div class="cog-list">
+        <div class="cog-list" id="cog-list">
 
         </div>
         <div class="cog-infographic">
@@ -29,7 +30,18 @@
         </div>
     </div>
 
-    
+    <template id="cog-list-template">
+        <div id="cog-list-group">
+            <div id="cog-image"></div>
+            <div id="cog-bonuses">
+                <div id="cog-bonus-1"></div>
+                <div id="cog-bonus-2"></div>
+                <div id="cog-bonus-3"></div>
+                <div id="directional-bonus"></div>
+            </div>
+            <div id="cog-location"></div>
+        </div>
+    </template>
     <script src="index.js"></script>
 </body>
 </html>
