@@ -138,7 +138,7 @@ function processBonuses(element,i) {
 }
 
 function processImage(element,i) {
-    const TESTING = true
+    const TESTING = false
 
     const cogSlice = cogsO[i].slice(0,3);
     let cogGroup = "";
@@ -382,7 +382,7 @@ function storeJson() {
             cogsM = JSON.parse(input.data.CogM);
         };
         
-        if(attributeExists(errorMessage, "hidden")) {
+        if(!(attributeExists(errorMessage, "hidden"))) {
             errorMessage.toggleAttribute("hidden");
         };
         jsonSidebar.toggleAttribute("hidden");
@@ -390,7 +390,8 @@ function storeJson() {
         if(TESTING) {
             console.log("CogO: " + cogsO + "\n\n\nCogM: " + cogsM)
         }
-    } catch {
+    } catch (e){
+        console.log(e);
         if(errorMessage.hasAttribute("hidden")){
             errorMessage.toggleAttribute("hidden");
         };
