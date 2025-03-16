@@ -39,76 +39,96 @@ function processBonuses(element,i) {
     let count = 0;
     let bonusA = false;
     let bonusC = false;
-    const TESTING = false
+    const TESTING = false;
 
     if(TESTING){
-        console.log(i)
-        console.log(cogsM[i])
-    }
+        console.log(i);
+        console.log(cogsM[i]);
+    };
 
     try {
         if(cogsM[i].a > 0) {
-            console.log("a count++")
+            if(TESTING){
+                console.log("a count++");
+            };
             count++;
             bonusA = true;
         };
     } catch {
-        console.log("Failed finding bonus a")
-    }
+        console.log("Failed finding bonus a");
+    };
     try {
         if(cogsM[i].c > 0) {
-            console.log("c count++")
+            if(TESTING){
+                console.log("c count++");
+            };
             count++;
             bonusC = true;
         };
     } catch {
-        console.log("Failed finding bonus b")
+        console.log("Failed finding bonus b");
     }
     try {
         if(cogsM[i].d > 0) {
-            console.log("d count++")
+            if(TESTING){
+                console.log("d count++");
+            };
             count++;
         };
     } catch {
-        console.log("Failed finding bonus c")
-    }
-    console.log("Count is: " + count)
+        console.log("Failed finding bonus c");
+    };
+    if(TESTING){
+        console.log("Count is: " + count);
+    };
     if(count >= 1) {
-        console.log("entered count 1")
+        if(TESTING){
+            console.log("entered count 1");
+        };
         cogBonus1 = element.getElementById('cog-bonus-1');
 
-        console.log(cogBonus1);
         if(bonusA){
-            console.log("bonusA existed: " + cogsM[i].a)
+            if(TESTING){
+                console.log("bonusA existed: " + cogsM[i].a);
+            };
             cogBonus1.innerText = cogsM[i].a + " BR";
-            //console.log(cogBonus1.innerText);
         } else if (bonusC) {
-            console.log("bonusC existed: " + cogsM[i].c)
+            if(TESTING){
+                console.log("bonusC existed: " + cogsM[i].c);
+            };
             cogBonus1.innerText = cogsM[i].c + " Flag";
             bonusC = false;
         } else {
-            console.log("must've been bonus D: " + cogsM[i].d)
+            if(TESTING){
+                console.log("must've been bonus D: " + cogsM[i].d);
+            };
             cogBonus1.innerText = cogsM[i].d + "% Exp";
-            //console.log(cogBonus1.innerText)
-        }
+        };
     };
     if(count >= 2) {
-        console.log("entered count 2")
+        if(TESTING){
+            console.log("entered count 2");
+        };
         cogBonus2 = element.getElementById('cog-bonus-2');
         if(bonusC) {
-            console.log("bonusC existed: " + cogsM[i].c)
+            if(TESTING){
+                console.log("bonusC existed: " + cogsM[i].c);
+            };
             cogBonus2.textContent = cogsM[i].c + " Flag";
         } else {
-            console.log("must've been bonus D: " + cogsM[i].d)
+            if(TESTING){
+                console.log("must've been bonus D: " + cogsM[i].d);
+            };
             cogBonus2.innerText = cogsM[i].d + "% Exp";
         };
     };
     if(count === 3) {
-        console.log("can only be bonus D: " + cogsM[i].d);
+        if(TESTING){
+            console.log("can only be bonus D: " + cogsM[i].d);
+        };
         cogBonus3 = element.getElementById('cog-bonus-3');
-        cogBonus3.innerText = cogsM[i].d + "% Exp"
+        cogBonus3.innerText = cogsM[i].d + "% Exp";
     };
-    console.log("end of process bonuses");
 }
 
 function processJSONCogList() {
@@ -121,17 +141,10 @@ function processJSONCogList() {
         cogDirectional = cogListElement.getElementById('directional-bonus');
         cogLocation = cogListElement.getElementById('cog-location');
 
-        //strI = i.toString()
-
         processBonuses(cogListElement,i);
-        console.log("past process bonuses")
 
         cogList.appendChild(cogListElement);
     }
-};
-
-function verifyJSON(JSON) {
-
 };
 
 let input = localStorage.getItem('input');
