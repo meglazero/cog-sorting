@@ -31,7 +31,7 @@
 
 .cog-panels {
     display: grid;
-    grid-template-columns: auto 80vw;
+    grid-template-columns: auto 70vw;
     margin: .5em;
 }
 
@@ -48,8 +48,31 @@
     grid-template-columns: auto auto;
 }
 
+#cog-bonuses div {
+    font-size: .9em;
+}
+
+.directional-title {
+    font-size: .75em;
+    border-bottom: solid 1px black;
+    justify-self: center;
+    width: 60%;
+}
+
+#cog-bonuses div {
+    text-align: center;
+}
+
 .cog-list-group {
     display: grid;
-    grid-template-columns: auto auto auto;
-    margin: 5px;
+    grid-template-columns: auto 15vw 6vw;
+    padding: 10px 5px;
+}
+
+div.cog-list > div:nth-of-type(odd) {
+    background:rgb(236, 239, 245)
+}
+
+div.cog-list > div:nth-of-type(even) {
+    background:rgb(251, 252, 255)
 }

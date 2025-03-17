@@ -300,17 +300,15 @@ function processImage(element,i) {
     };
 
     if(p2wFlag == false){
-        const imageElement = element.getElementById('cog-image');
         const imgElement = document.createElement('img');
         const imagePath = "Img/"+levelTier+"_"+fileTier+".png";
         imgElement.src = imagePath;
-        imageElement.appendChild(imgElement);
+        element.appendChild(imgElement);
         if(TESTING){
             console.log(imagePath);
         };
     } else if (fileTier === "Yin") {
         try{
-            const imageElement = element.getElementById('cog-image');
             const imgElement = document.createElement('img');
             const imagePath = "Img/"+fileTier+"_Top_Left_Cog"+".png";
             imgElement.src = imagePath;
@@ -321,7 +319,7 @@ function processImage(element,i) {
                 cogLevel--
             }
             imgElement.style = "rotate: " + 90*cogLevel + "deg";
-            imageElement.appendChild(imgElement);
+            element.appendChild(imgElement);
             if(TESTING){
                 console.log(imagePath);
             };
@@ -330,11 +328,10 @@ function processImage(element,i) {
         };
     } else if (fileTier === "Yang") {
         try {
-            const imageElement = element.getElementById('cog-image');
             const imgElement = document.createElement('img');
             const imagePath = "Img/"+fileTier+"_Cog"+".png";
             imgElement.src = imagePath;
-            imageElement.appendChild(imgElement);
+            element.appendChild(imgElement);
             if(TESTING){
                 console.log(imagePath);
             };
@@ -344,19 +341,23 @@ function processImage(element,i) {
     };
 };
 
-function processDirectionals(element, i) {
-    const TESTING = false;
-    const directionalBonuses = ['f', 'e']
+function processDirectionals(element, i, count, directionalArray) {
+    const temp = document.createElement('span');
+    temp.innerText = 'Directional Bonuses'
+    temp.classList.add("directional-title");
+    element.appendChild(temp)
 
-    if(TESTING) {
-        directionalBonuses.forEach((element) => {
-            if(element in cogsM[i]) {
-                console.log(cogsM[i]);
-            };
-        });
-        //console.log('f' in cogsM[i]);
+    if(count === 2 || directionalArray[0] in cogsM[i]) {
+        const temp = document.createElement('div');
+        temp.innerText = '+' + cogsM[i].e + '% BR';
+        element.appendChild(temp);
     };
-    return;
+
+    if(count === 2 || directionalArray[1] in cogsM[i]) {
+        const temp = document.createElement('div');
+        temp.innerText = '+' + cogsM[i].f + '% Exp';
+        element.appendChild(temp);
+    };
 };
 
 function processLocation(element, i) {
@@ -404,17 +405,28 @@ function processLocation(element, i) {
 
 function processJSONCogList() {
     const cogList = document.getElementById('cog-list');
-    const cogListTemplate = document.getElementById('cog-list-template');
+    const directionalBonuses = ['e','f'];
+    const TESTING = false;
 
     for(let i = 0; i < 96; i++) {
-        const cogListElement = document.importNode(cogListTemplate.content, true);
-        //cogImage = cogListElement.getElementById('cog-image');
-        cogDirectional = cogListElement.getElementById('directional-bonus');
-        cogLocation = cogListElement.getElementById('cog-location');
+        const cogListElement = document.importNode(document.getElementById('cog-list-template').content, true);
 
-        processImage(cogListElement,i);
+        processImage(cogListElement.getElementById('cog-image'),i);
         processBonuses(cogListElement,i);
-        processDirectionals(cogListElement,i);
+        let count = 0;
+        for(let j=0; j<directionalBonuses.length; j++) {
+            if(directionalBonuses[j] in cogsM[i]){
+                if(TESTING) {
+                    console.log('success: ' + j);
+                };
+                count++
+            };
+        };
+        if(count > 0){
+            //probably need to go through and refactor the other functions to use the direct element as their input not
+            //the entire template, just doesn't really need to be that messy in most cases
+            processDirectionals(cogListElement.getElementById('directional-bonus'),i,count,directionalBonuses);
+        }
         processLocation(cogListElement,i);
 
         cogList.appendChild(cogListElement);
