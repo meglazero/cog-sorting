@@ -299,17 +299,16 @@ function processImage(element,i) {
             break;
     };
 
+    const imgElement = document.createElement('img');
+
     if(p2wFlag == false){
-        const imgElement = document.createElement('img');
         const imagePath = "Img/"+levelTier+"_"+fileTier+".png";
         imgElement.src = imagePath;
-        element.appendChild(imgElement);
         if(TESTING){
             console.log(imagePath);
         };
     } else if (fileTier === "Yin") {
         try{
-            const imgElement = document.createElement('img');
             const imagePath = "Img/"+fileTier+"_Top_Left_Cog"+".png";
             imgElement.src = imagePath;
             cogLevel = parseInt(cogLevel);
@@ -319,7 +318,6 @@ function processImage(element,i) {
                 cogLevel--
             }
             imgElement.style = "rotate: " + 90*cogLevel + "deg";
-            element.appendChild(imgElement);
             if(TESTING){
                 console.log(imagePath);
             };
@@ -328,10 +326,8 @@ function processImage(element,i) {
         };
     } else if (fileTier === "Yang") {
         try {
-            const imgElement = document.createElement('img');
             const imagePath = "Img/"+fileTier+"_Cog"+".png";
             imgElement.src = imagePath;
-            element.appendChild(imgElement);
             if(TESTING){
                 console.log(imagePath);
             };
@@ -339,6 +335,7 @@ function processImage(element,i) {
             console.log(e);
         };
     };
+    element.appendChild(imgElement);
 };
 
 function processDirectionals(element, i, count, directionalArray) {

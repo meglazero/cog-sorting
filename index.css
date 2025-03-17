@@ -63,6 +63,20 @@
     text-align: center;
 }
 
+#cog-image {
+    position: relative;
+}
+
+#cog-image img{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    vertical-align: middle;
+    margin: auto;
+}
+
 .cog-list-group {
     display: grid;
     grid-template-columns: auto 15vw 6vw;
