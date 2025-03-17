@@ -367,30 +367,28 @@ function processLocation(element, i) {
     const cogRow = Math.floor(i/12)+1
     const cogCol = (i%12)+1
     const elements = []
-    const locationElement = element.getElementById('cog-location');
+    //const locationElement = element.getElementById('cog-location');
 
     if(cogSlice !== 'Cog') {return};
 
     for(let i=0; i<4; i++) {
-        elements.push(document.createElement('div'))
-    }
-    for(let i=0; i<elements.length; i++) {
+        const temp = document.createElement('div');
         switch(i) {
             case 0:
-                elements[i].innerText = 'Row:';
+                temp.innerText = 'Row:';
                 break;
             case 1:
-                elements[i].innerText = cogRow;
+                temp.innerText = cogRow;
                 break;
             case 2:
-                elements[i].innerText = 'Col:';
+                temp.innerText = 'Col:';
                 break;
             case 3:
-                elements[i].innerText = cogCol;
+                temp.innerText = cogCol;
                 break;
         };
-        locationElement.appendChild(elements[i]);
-    };
+        element.appendChild(temp);
+    }
 
     if(TESTING) {
         if(i%12 === 0){
@@ -427,7 +425,7 @@ function processJSONCogList() {
             //the entire template, just doesn't really need to be that messy in most cases
             processDirectionals(cogListElement.getElementById('directional-bonus'),i,count,directionalBonuses);
         }
-        processLocation(cogListElement,i);
+        processLocation(cogListElement.getElementById('cog-location'),i);
 
         cogList.appendChild(cogListElement);
     }
