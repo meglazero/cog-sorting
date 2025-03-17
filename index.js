@@ -135,7 +135,7 @@ function processBonuses(element,i) {
     };
     if(count === 3) {
         if(TESTING){
-            console.log("can only be bonus D: " + cogsM[i].d);
+            console.log("must be bonus D: " + cogsM[i].d);
         };
         cogBonus3 = element.getElementById('cog-bonus-3');
         cogBonus3.innerText = cogsM[i].d + "% Exp";
@@ -333,7 +333,7 @@ function processImage(element,i) {
             const imageElement = element.getElementById('cog-image');
             const imgElement = document.createElement('img');
             const imagePath = "Img/"+fileTier+"_Cog"+".png";
-            imageElement.src = imagePath;
+            imgElement.src = imagePath;
             imageElement.appendChild(imgElement);
             if(TESTING){
                 console.log(imagePath);
@@ -345,16 +345,30 @@ function processImage(element,i) {
 };
 
 function processDirectionals(element, i) {
+    const TESTING = false;
+    const directionalBonuses = ['f', 'e']
+
+    if(TESTING) {
+        directionalBonuses.forEach((element) => {
+            if(element in cogsM[i]) {
+                console.log(cogsM[i]);
+            };
+        });
+        //console.log('f' in cogsM[i]);
+    };
     return;
 };
 
 function processLocation(element, i) {
     const TESTING = false;
 
+    const cogSlice = cogsO[i].slice(0,3);
     const cogRow = Math.floor(i/12)+1
     const cogCol = (i%12)+1
     const elements = []
     const locationElement = element.getElementById('cog-location');
+
+    if(cogSlice !== 'Cog') {return};
 
     for(let i=0; i<4; i++) {
         elements.push(document.createElement('div'))
