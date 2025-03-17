@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cog Helper</title>
+
+    <!-- add icon link -->
+    <link rel="icon" href="/Img/CogB_Nooby.png" type="image/x-icon" />
 </head>
 <body>
-    <div id="sidebar">
+    <div id="sidebar" class="shown">
         <div>
             <form id="json-form" onsubmit="return false">
                 <span>Paste JSON Here:</span>
@@ -31,7 +34,7 @@
     </div>
 
     <template id="cog-list-template">
-        <div id="cog-list-group">
+        <div id="cog-list-group" class="cog-list-group">
             <div id="cog-image"></div>
             <div id="cog-bonuses">
                 <div id="cog-bonus-1"></div>
@@ -39,10 +42,10 @@
                 <div id="cog-bonus-3"></div>
                 <div id="directional-bonus"></div>
             </div>
-            <div id="cog-location"></div>
+            <div id="cog-location" class="cog-location"></div>
         </div>
     </template>
     <script src="index.js"></script>
-    <script src="index.css"></script>
+    <link rel="stylesheet" href="index.css">
 </body>
 </html>

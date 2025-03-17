@@ -34,6 +34,11 @@ cogs:
 IT/IE JSON is an object, IT will always be JSON.data.[info], IE always be JSON.[info]
 (in this case, info would be CogsO or CogsM)
 */
+const jsonSidebar = document.getElementById('sidebar');
+const jsonTextBox = document.getElementById('json-input');
+const jsonButton = document.getElementById('json-submit-button');
+let cogsO = localStorage.getItem('cogsO');
+let cogsM = localStorage.getItem('cogsM');
 
 function processBonuses(element,i) {
     let count = 0;
@@ -337,9 +342,50 @@ function processImage(element,i) {
             console.log(e);
         };
     };
+};
 
+function processDirectionals(element, i) {
+    return;
+};
 
+function processLocation(element, i) {
+    const TESTING = false;
 
+    const cogRow = Math.floor(i/12)+1
+    const cogCol = (i%12)+1
+    const elements = []
+    const locationElement = element.getElementById('cog-location');
+
+    for(let i=0; i<4; i++) {
+        elements.push(document.createElement('div'))
+    }
+    for(let i=0; i<elements.length; i++) {
+        switch(i) {
+            case 0:
+                elements[i].innerText = 'Row:';
+                break;
+            case 1:
+                elements[i].innerText = cogRow;
+                break;
+            case 2:
+                elements[i].innerText = 'Col:';
+                break;
+            case 3:
+                elements[i].innerText = cogCol;
+                break;
+        };
+        locationElement.appendChild(elements[i]);
+    };
+
+    if(TESTING) {
+        if(i%12 === 0){
+            console.log('New row?');
+        }
+        console.log(Math.floor(i/12));
+        console.log('Row: ' + (Math.floor(i/12)+1) + ' | Column: ' + ((i%12)+1))
+        console.log(elements);
+    };
+    return;
 };
 
 function processJSONCogList() {
@@ -354,13 +400,12 @@ function processJSONCogList() {
 
         processImage(cogListElement,i);
         processBonuses(cogListElement,i);
+        processDirectionals(cogListElement,i);
+        processLocation(cogListElement,i);
 
         cogList.appendChild(cogListElement);
     }
 };
-
-let cogsO = localStorage.getItem('cogsO');
-let cogsM = localStorage.getItem('cogsM');
 
 function storeJson() {
     const errorMessage = document.getElementById("error-message");
@@ -385,7 +430,8 @@ function storeJson() {
         if(!(attributeExists(errorMessage, "hidden"))) {
             errorMessage.toggleAttribute("hidden");
         };
-        jsonSidebar.toggleAttribute("hidden");
+        jsonSidebar.classList.remove("shown");
+        jsonSidebar.classList.add("hidden");
         processJSONCogList();
         if(TESTING) {
             console.log("CogO: " + cogsO + "\n\n\nCogM: " + cogsM)
@@ -408,13 +454,11 @@ function attributeExists(element, input) {
     }
 };
 
-const jsonSidebar = document.getElementById("sidebar");
-const jsonTextBox = document.getElementById("json-input");
-const jsonButton = document.getElementById('json-submit-button');
 jsonButton.addEventListener('click', storeJson, false);
 window.addEventListener("keyup", (e) => {
-    if (e.key === "Escape" && attributeExists(jsonSidebar, "hidden")) {
-        jsonSidebar.toggleAttribute("hidden");
+    if (e.key === "Escape" && jsonSidebar.classList.contains("hidden")) {
+        jsonSidebar.classList.remove("hidden");
+        jsonSidebar.classList.add("shown");
     } else {
         return;
     };
