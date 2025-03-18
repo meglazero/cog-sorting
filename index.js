@@ -398,14 +398,98 @@ function processLocation(element, i) {
     return;
 };
 
-function processJSONCogList() {
-    const cogList = document.getElementById('cog-list');
-    const directionalBonuses = ['e','f'];
-    const TESTING = false;
+function createSortButtons(element, info) {
+    const sortGroup = document.createElement('div');
+    sortGroup.classList.add('sortGroup');
+    const sort = document.createElement('div');
+    sort.classList.add('button');
+    sort.classList.add('noselect');
+    sort.id = info + '-sort-button';
+    sort.innerText = 'Sort';
+    sortGroup.appendChild(sort);
+    element.appendChild(sortGroup);
+}
 
+function sortCogs(value) {
+    const TESTING = true
+    const cogList = document.getElementById('cog-list');
+
+    if(TESTING) {
+        console.log(JSON.stringify(cogsM));
+
+        /*
+        a: build rate
+        b: exp/hr
+        c: flaggy rate
+        d: Exp
+        e: directional build rate
+        f: directional exp bonus
+        */
+
+        const possibleSorts = {
+            'BR': 'a',
+            'EXP': 'd',
+            'Flaggy': 'c',
+            'dBR': 'e',
+            'dEXP': 'f'
+        }
+
+        const sortable = [];
+
+        //just trying to think this through somewhat, cogsM is set up as: {"0":{"f":55}}
+        //so can't just pull the info out, need like a double loop I suppose?
+
+        for (var cogs in cogsM) {
+            if(parseInt(cogs) > 95) {
+                break;
+            }
+            for (var info in cogsM[cogs]) {
+                if (info == possibleSorts[value]) {
+                    //console.log(cogs + ' contains value f');
+
+                    sortable.push([cogs, cogsM[cogs][info]])
+                };
+            };
+        };
+
+        sortable.sort(function(a, b) {
+            return a[1] - b[1];
+        });
+
+        const objSorted = {};
+
+        // these 2 basically do the same thing
+        sortable.forEach(function(item) {
+            objSorted[item[0]]=item[1];
+        });
+
+        console.log(JSON.stringify(objSorted));
+
+        const sortedCogM = {}
+
+        for(var cog in cogsM) {
+            if (cog in objSorted) {
+                sortedCogM[cog] = cogsM[cog];
+            };
+        };
+
+        console.log(JSON.stringify(sortedCogM));
+
+        cogList.replaceChildren();
+        createSortButtons(cogList, 'cog-list');
+        processCogDivs(cogList, sortedCogM, cogsO);
+        document.getElementById('cog-list-sort-button').addEventListener('click', function() {
+            sortCogs('EXP');
+        }, false);
+    }
+}
+
+function processCogDivs(cogList, cogInfo, cogFormat) {
+    const directionalBonuses = ['e','f'];
+    
     for(let i = 0; i < 96; i++) {
         const cogListElement = document.importNode(document.getElementById('cog-list-template').content, true);
-
+    
         processImage(cogListElement.getElementById('cog-image'),i);
         processBonuses(cogListElement,i);
         let count = 0;
@@ -423,9 +507,21 @@ function processJSONCogList() {
             processDirectionals(cogListElement.getElementById('directional-bonus'),i,count,directionalBonuses);
         }
         processLocation(cogListElement.getElementById('cog-location'),i);
-
+    
         cogList.appendChild(cogListElement);
-    }
+    };
+};
+
+function processJSONCogList(cogInfo, cogFormat) {
+    const cogList = document.getElementById('cog-list');
+    const TESTING = false;
+
+    createSortButtons(cogList, "cog-list"); 
+    document.getElementById('cog-list-sort-button').addEventListener('click', function() {
+        sortCogs('EXP');
+    }, false);
+
+    processCogDivs(cogList, cogInfo, cogFormat);
 };
 
 function storeJson() {
@@ -453,7 +549,7 @@ function storeJson() {
         };
         jsonSidebar.classList.remove("shown");
         jsonSidebar.classList.add("hidden");
-        processJSONCogList();
+        processJSONCogList(cogsM, cogsO);
         if(TESTING) {
             console.log("CogO: " + cogsO + "\n\n\nCogM: " + cogsM)
         }
