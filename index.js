@@ -216,6 +216,7 @@ function attributeExists(element, input) {
 };
 
 jsonButton.addEventListener('click', storeJson, false);
+//add a hamburger menu to top left to also bring back up the sidebar to past the json
 window.addEventListener("keyup", (e) => {
     if (e.key === "Escape" && jsonSidebar.classList.contains("hidden")) {
         jsonSidebar.classList.remove("hidden");

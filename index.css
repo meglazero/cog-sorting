@@ -32,6 +32,14 @@ body {
     transition: transform 1s ease;
 }
 
+.hint {
+    font-size: .7em;
+    color: var(--accent);
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
 .hidden {
     transform: translate(-20vw, 0) scaleX(0);
     overflow: hidden;
@@ -42,12 +50,13 @@ body {
     transform: translate(0, 0) scaleX(1);
 }
 
-.button {
-    border: solid 1px black;
-    border-radius: 1em;
+.sortGroup {
+    display: grid;
+    justify-items: center;
 }
 
 .button {
+    border-radius: 1em;
     display:inline-block;
     color:#444;
     border:1px solid #CCC;
