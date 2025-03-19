@@ -1,3 +1,11 @@
+:root {
+    --main: #6A4A3C;
+    --light: #E8E2D4;
+    --accent: #A9BC82;
+    --warm: #D1A364;
+    --dark: #4A3A2A; 
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,10 +14,15 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+body {
+    background: var(--main);
+}
+
 #sidebar {
+    z-index: 1;
     position: absolute;
     width: 20vw;
-    background-color: rgba(236, 239, 245, 0.9);
+    background-color: var(--light);
     height: 100%;
     padding: 1em;
     -webkit-transition: -webkit-transform 1s ease;
@@ -66,17 +79,21 @@
     font-size: 2em;
     font-weight: 700;
     text-align: center;
+    color: var(--light);
+    text-shadow: 2px 2px 8px black;
 }
 
 .website-subtitle {
     font-size: 1.2em;
     text-align: center;
+    color: var(--accent);
 }
 
 .cog-panels {
     display: grid;
     grid-template-columns: auto 70vw;
     margin: .5em;
+    color: var(--dark);
 }
 
 .cog-list {
@@ -90,6 +107,15 @@
 .cog-location{ 
     display: grid;
     grid-template-columns: auto auto;
+    font-size: .9em;
+    vertical-align: middle;
+    grid-template-rows: auto auto;
+}
+
+.cog-location div {
+    display: inline-block;
+    margin: auto;
+    vertical-align: middle;
 }
 
 #cog-bonuses div {
@@ -123,14 +149,19 @@
 
 .cog-list-group {
     display: grid;
-    grid-template-columns: auto 15vw 6vw;
+    grid-template-columns: auto 15vw 5vw;
     padding: 10px 5px;
 }
 
 div.cog-list > div:nth-of-type(odd) {
-    background:rgb(236, 239, 245)
+    background: var(--light);
 }
 
 div.cog-list > div:nth-of-type(even) {
-    background:rgb(251, 252, 255)
+    background: var(--dark);
+    color: var(--light);
+}
+
+div.cog-list > div:nth-of-type(even) .directional-title {
+    border-bottom: solid 1px var(--light);
 }
