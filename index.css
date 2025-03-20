@@ -53,6 +53,19 @@ body {
 .sortGroup {
     display: grid;
     justify-items: center;
+    grid-template-columns: auto auto;
+    padding: 5px;
+    vertical-align: middle;
+}
+
+
+.checkbox-div {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-div label {
+    padding-right: 10px;
 }
 
 .button {

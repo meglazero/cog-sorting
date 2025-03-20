@@ -45,17 +45,34 @@ let cogsM = localStorage.getItem('cogsM');
 function createSortButtons(element, info) {
     const sortGroup = document.createElement('div');
     sortGroup.classList.add('sortGroup');
+
     const sort = document.createElement('div');
     sort.classList.add('button');
     sort.classList.add('noselect');
     sort.id = info + '-sort-button';
     sort.innerText = 'Sort';
+
+    const dCheckbox = document.createElement('input');
+    dCheckbox.type = 'checkbox';
+    dCheckbox.id = 'directional-checkbox';
+    dCheckbox.name = 'directional-checkbox';
+
+    const dCheckboxLabel = document.createElement('label');
+    dCheckboxLabel.for = 'directional-checkbox';
+    dCheckboxLabel.innerText = 'Include directional cogs:';
+
+    const checkboxDiv = document.createElement('div');
+    checkboxDiv.classList.add('checkbox-div');
+    checkboxDiv.appendChild(dCheckboxLabel);
+    checkboxDiv.appendChild(dCheckbox);
+
     sortGroup.appendChild(sort);
+    sortGroup.appendChild(checkboxDiv);
     element.appendChild(sortGroup);
 }
 
 function sortCogs(value) {
-    const TESTING = true
+    const TESTING = false;
     const cogList = document.getElementById('cog-list');
     
     const possibleSorts = {
@@ -65,6 +82,10 @@ function sortCogs(value) {
         'dBR': 'e',
         'dEXP': 'f'
     };
+
+    const directionalDoubles = [
+        'le', 'ri', 'up', 'do', 'ad', 'di', 'ro', 'co', 'cr'
+    ];
 
     /*
     a: build rate
@@ -76,16 +97,33 @@ function sortCogs(value) {
     */
 
     const sortable = [];
+    const directionalCheckbox = document.getElementById('directional-checkbox');
+    if (TESTING) {
+        console.log(directionalCheckbox.checked)
+    }
 
     for (var cogs in cogsM) {
         if(parseInt(cogs) > 95) {
             break;
         }
         for (var info in cogsM[cogs]) {
+            if (TESTING) {
+                console.log(cogsO[cogs]);
+            };
             if (info == possibleSorts[value]) {
-                //console.log(cogs + ' contains value f');
-
-                sortable.push([cogs, cogsM[cogs][info]]);
+                if (TESTING) {
+                    console.log(cogs + ' contains value f');
+                }
+                const cogTierSlice = cogsO[cogs].slice(3,4);
+                if(!(cogTierSlice === 'Y' || cogTierSlice === 'Z')){
+                    if(!(directionalCheckbox.checked)) {
+                        if(!(directionalDoubles.includes(cogsO[cogs].slice(4,6)))){
+                            sortable.push([cogs, cogsM[cogs][info]]);
+                        }
+                    } else {
+                        sortable.push([cogs, cogsM[cogs][info]])
+                    }
+                };
             };
         };
     };
@@ -158,6 +196,8 @@ function processCogDivs(cogList, cogInfo, cogFormat, cogArray) {
 function processJSONCogList(cogInfo, cogFormat) {
     const cogList = document.getElementById('cog-list');
     const TESTING = false;
+
+    cogList.replaceChildren();
 
     createSortButtons(cogList, "cog-list"); 
     document.getElementById('cog-list-sort-button').addEventListener('click', function() {
