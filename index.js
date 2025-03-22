@@ -218,14 +218,15 @@ function storeJson() {
             console.log(input)
             console.log(input.data.CogM);
             console.log(input.data.CogO);
+            console.log(typeof(input.data.CogO));
         }
 
         if(!('data' in input)) {
-            cogsO = JSON.parse(input.CogO);
-            cogsM = JSON.parse(input.CogM);
+            cogsO = JSON.parse(JSON.stringify(input.CogO));
+            cogsM = JSON.parse(JSON.stringify(input.CogM));
         } else {
-            cogsO = JSON.parse(input.data.CogO);
-            cogsM = JSON.parse(input.data.CogM);
+            cogsO = JSON.parse(JSON.stringify(input.data.CogO));
+            cogsM = JSON.parse(JSON.stringify(input.data.CogM));
         };
         
         if(!(attributeExists(errorMessage, "hidden"))) {
@@ -235,7 +236,7 @@ function storeJson() {
         jsonSidebar.classList.add("hidden");
         processJSONCogList(cogsM, cogsO);
         if(TESTING) {
-            console.log("CogO: " + cogsO + "\n\n\nCogM: " + cogsM)
+            console.log("CogO: " + cogsO + "\n\n\nCogM: " + JSON.stringify(cogsM))
         }
     } catch (e){
         console.log(e);
