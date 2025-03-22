@@ -108,9 +108,10 @@ export function processBonuses(element,i,cogInfo,cogArray) {
     };
 }
 
-export function processImage(element,i,cogInfo,cogFormat,cogArray) {
-    const TESTING = false
-
+export function processImage(element,i,cogInfo,cogFormat,cogArray,TESTING = false,displayPlayers = false) {
+    if(TESTING) {
+        console.log(element);
+    };
     const currentCog = cogArray[i][0];
     const cogSlice = cogFormat[currentCog].slice(0,3);
     let cogGroup = "";
@@ -120,14 +121,24 @@ export function processImage(element,i,cogInfo,cogFormat,cogArray) {
     let p2wFlag = false;
     
     if (TESTING) {
-        console.log(cogFormat[currentCog]);
-        //console.log(cogSlice)
-    }
-    if(cogSlice != "Cog") {
-        if (TESTING) {
-            console.log("Cog slice did not match Cog");
+        //console.log(cogFormat[currentCog]);
+        console.log(element);
+        console.log('i: ' + i + '| cogSlice: ' + cogSlice + '| displayPlayer: ' + displayPlayers)
+        console.log(cogArray[i]);
+    };
+    if(cogSlice === "Pla" && displayPlayers === true) {
+        if(TESTING) {
+            console.log('Player and displaying Players');
+            console.log(element);
         };
-        return
+        //need to make this display a player head in the slot
+        element.innerText = "Player";
+        return;
+    } else if (cogSlice != "Cog") {
+        if (TESTING) {
+            console.log("Cog slice: " + cogSlice + " did not match Cog");
+        };
+        return;
     };
     const cogTier = cogFormat[currentCog].slice(3,4);
     if(TESTING) {
@@ -301,6 +312,10 @@ export function processImage(element,i,cogInfo,cogFormat,cogArray) {
         } catch (e) {
             console.log(e);
         };
+    };
+    if(TESTING) {
+        console.log('Element: ' + element);
+        console.log('imgElement: ' + imgElement);
     };
     element.appendChild(imgElement);
 };

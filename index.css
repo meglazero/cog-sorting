@@ -187,3 +187,20 @@ div.cog-list > div:nth-of-type(even) {
 div.cog-list > div:nth-of-type(even) .directional-title {
     border-bottom: solid 1px var(--light);
 }
+
+#cogboard {
+    padding: 1em;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px;
+}
+
+#cogboard div {
+    width: 55px;
+    height: 55px;
+    vertical-align: middle;
+    text-align: center;
+    padding: 5px;
+    margin: 2px;
+    border: solid 1px black;
+}

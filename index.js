@@ -35,6 +35,7 @@ IT/IE JSON is an object, IT will always be JSON.data.[info], IE always be JSON.[
 (in this case, info would be CogsO or CogsM)
 */
 import { processBonuses, processImage, processLocation, processDirectionals } from "./process-cogs.js";
+import { cogBoard } from "./drawCogBoard.js";
 
 const jsonSidebar = document.getElementById('sidebar');
 const jsonTextBox = document.getElementById('json-input');
@@ -166,6 +167,10 @@ function processCogDivs(cogList, cogInfo, cogFormat, cogArray) {
     }
     
     for(let i = 0; i < forLength; i++) {
+        if(TESTING && i === 0){
+            console.log(cogFormat)
+            console.log('Entered for loop');
+        };
         if(cogFormat[i].slice(0,3) != 'Cog') {
             continue;
         }
@@ -222,11 +227,27 @@ function storeJson() {
         }
 
         if(!('data' in input)) {
-            cogsO = JSON.parse(JSON.stringify(input.CogO));
-            cogsM = JSON.parse(JSON.stringify(input.CogM));
+            if(typeof(input.CogO) !== 'string'){
+                cogsO = JSON.parse(JSON.stringify(input.CogO));
+            } else {
+                cogsO = JSON.parse(input.CogO);
+            }
+            if(typeof(input.CogM) !== 'string'){
+                cogsM = JSON.parse(JSON.stringify(input.CogM));
+            } else {
+                cogsM = JSON.parse(input.CogM);
+            }
         } else {
-            cogsO = JSON.parse(JSON.stringify(input.data.CogO));
-            cogsM = JSON.parse(JSON.stringify(input.data.CogM));
+            if(typeof(input.data.CogO) !== 'string'){
+                cogsO = JSON.parse(JSON.stringify(input.data.CogO));
+            } else {
+                cogsO = JSON.parse(input.data.CogO);
+            }
+            if(typeof(input.data.CogM) !== 'string'){
+                cogsM = JSON.parse(JSON.stringify(input.data.CogM));
+            } else {
+                cogsM = JSON.parse(input.data.CogM);
+            }
         };
         
         if(!(attributeExists(errorMessage, "hidden"))) {
@@ -235,6 +256,9 @@ function storeJson() {
         jsonSidebar.classList.remove("shown");
         jsonSidebar.classList.add("hidden");
         processJSONCogList(cogsM, cogsO);
+
+        const cogBoardElement = document.getElementById('cogboard');
+        cogBoard(cogBoardElement, cogsM, cogsO, Object.entries(cogsM), [processImage]);
         if(TESTING) {
             console.log("CogO: " + cogsO + "\n\n\nCogM: " + JSON.stringify(cogsM))
         }
