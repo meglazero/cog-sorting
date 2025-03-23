@@ -50,7 +50,7 @@ function addImages(cogInfo, cogFormat, cogArray, processImage) {
             console.log(cogFormat[i].slice(0,3) + ' ' + i);
         };
         if(cogFormat[i].slice(0,3) !== 'Cog') {
-            if(cogFormat[i].slice(0,3) !== 'Bla') {
+            if(cogFormat[i].slice(0,3) === 'Bla') {
                 offset++;
                 continue;
             };

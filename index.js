@@ -170,8 +170,10 @@ function processCogDivs(cogList, cogInfo, cogFormat, cogArray) {
         if(TESTING && i === 0){
             console.log(cogFormat)
             console.log('Entered for loop');
+            console.log(cogFormat[currentCog])
         };
-        if(cogFormat[i].slice(0,3) != 'Cog') {
+        const currentCog = cogArray[i][0]
+        if(cogFormat[currentCog].slice(0,3) !== 'Cog') {
             continue;
         }
         const cogListElement = document.importNode(document.getElementById('cog-list-template').content, true);
@@ -193,8 +195,10 @@ function processCogDivs(cogList, cogInfo, cogFormat, cogArray) {
             processDirectionals(cogListElement.getElementById('directional-bonus'),i,count,directionalBonuses,cogInfo,cogArray);
         }
         processLocation(cogListElement.getElementById('cog-location'),i,cogFormat,cogArray);
-    
-        cogList.appendChild(cogListElement);
+        
+        if(cogFormat[i].slice(0,3) === 'Cog') {
+            cogList.appendChild(cogListElement);
+        }
     };
 };
 
