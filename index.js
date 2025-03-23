@@ -37,6 +37,13 @@ IT/IE JSON is an object, IT will always be JSON.data.[info], IE always be JSON.[
 import { processBonuses, processImage, processLocation, processDirectionals } from "./process-cogs.js";
 import { cogBoard } from "./drawCogBoard.js";
 
+/*------------------------------------------------------*/
+const subtitles = document.getElementsByClassName('website-subtitle')
+const subTemp = document.createElement('div')
+subTemp.innerText = 'Doesn\'t work very well with empty squares for now, WIP for fixing that'
+subtitles[0].appendChild(subTemp);
+/*------------------------------------------------------*/
+
 const jsonSidebar = document.getElementById('sidebar');
 const jsonTextBox = document.getElementById('json-input');
 const jsonButton = document.getElementById('json-submit-button');
