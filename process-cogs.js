@@ -132,7 +132,10 @@ export function processImage(element,i,cogInfo,cogFormat,cogArray,TESTING = fals
             console.log(element);
         };
         //need to make this display a player head in the slot
-        element.innerText = "Player";
+        console.log(cogFormat[currentCog])
+        const fullVariablePlayerName = cogFormat[currentCog]
+        const playerName = fullVariablePlayerName.slice(7,fullVariablePlayerName.length)
+        element.innerText = playerName;
         element.classList.add("playerBox")
         return;
     } else if (cogSlice != "Cog") {

@@ -198,7 +198,6 @@ div.cog-list > div:nth-of-type(even) .directional-title {
 #cogboard div {
     width: 55px;
     height: 55px;
-    vertical-align: middle;
     text-align: center;
     padding: 5px;
     margin: 2px;
@@ -206,7 +205,14 @@ div.cog-list > div:nth-of-type(even) .directional-title {
 }
 
 #cogboard div.playerBox {
-    padding: 30% 0;
+    display: flex;
+    width: 55px;
+    height: 55px;
+    justify-content: center;
+    align-items: center;
+    font-size: .9em;
+    word-break: break-all;
+    text-wrap: balance;
     color:var(--light);
 }
 
