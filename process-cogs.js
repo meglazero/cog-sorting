@@ -133,6 +133,7 @@ export function processImage(element,i,cogInfo,cogFormat,cogArray,TESTING = fals
         };
         //need to make this display a player head in the slot
         element.innerText = "Player";
+        element.classList.add("playerBox")
         return;
     } else if (cogSlice != "Cog") {
         if (TESTING) {
