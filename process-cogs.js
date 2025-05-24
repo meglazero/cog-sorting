@@ -291,17 +291,29 @@ export function processImage(element,i,cogInfo,cogFormat,cogArray,TESTING = fals
         };
     } else if (fileTier === "Yin") {
         try{
-            const imagePath = "Img/"+fileTier+"_Top_Left_Cog"+".png";
+            let directionalInput = "";
+            console.log(parseInt(cogLevel));
+            switch(parseInt(cogLevel)) {
+                case 0:
+                    directionalInput = "_Top_Left_";
+                    break;
+                case 1:
+                    directionalInput = "_Top_Right_";
+                    element.style = "padding-left: 2px;"
+                    break;
+                case 2:
+                    directionalInput = "_Bottom_Left_";
+                    element.style = "padding-top: 2px;"
+                    break;
+                case 3:
+                    directionalInput = "_Bottom_Right_";
+                    element.style = "padding-top: 2px; padding-left: 2px;"
+                    break;
+            };
+            const imagePath = "Img/"+fileTier+directionalInput+"Cog"+".png";
             imgElement.src = imagePath;
-            cogLevel = parseInt(cogLevel);
-            if(cogLevel === 2){
-                cogLevel++
-            } else if (cogLevel === 3){
-                cogLevel--
-            }
-            imgElement.style = "rotate: " + 90*cogLevel + "deg";
+            console.log(imagePath);
             if(TESTING){
-                console.log(imagePath);
             };
         } catch (e) {
             console.log(e);
