@@ -192,7 +192,7 @@ div.cog-list > div:nth-of-type(even) .directional-title {
     padding: 1em;
     display: grid;
     justify-content: center;
-    grid-template-columns: 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px;
+    grid-template-columns: 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px;
 }
 
 #cogboard div {
@@ -203,4 +203,14 @@ div.cog-list > div:nth-of-type(even) .directional-title {
     padding: 5px;
     margin: 2px;
     border: solid 1px black;
+}
+
+#cogboard div:first-child {
+    border: none;
+    visibility: none;
+}
+
+#cogboard div:nth-child(-n + 13), #cogboard div:nth-child(13n + 1) {
+    color: var(--light);
+    padding: 30% 0;
 }

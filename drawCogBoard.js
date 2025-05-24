@@ -20,14 +20,24 @@ function buildTable(element) {
 
     //processImage(cogListElement.getElementById('cog-image'),i,cogInfo,cogFormat,cogArray);
 
-    for(let i=1; i<=8; i++) {
-        for(let j=1; j<=12; j++) {
+    for(let i=0; i<=8; i++) {
+        for(let j=0; j<=12; j++) {
             const temp = document.createElement('div');
+            const value = 9
+            const alphaJ = (value+j).toString(36).toUpperCase();
             if(TESTING) {
-                console.log('Row: ' + i + ' Col: ' + j);
+                console.log('Row: ' + i + ' Col: ' + alphaJ);
             };
-            const infoID = i + '-' + j;
+            const infoID = i + '-' + alphaJ;
             temp.id = infoID;
+
+            if(i === 0 && alphaJ === "9") {
+                ;
+            } else if (i === 0 && alphaJ !== "9") {
+                temp.innerText = alphaJ
+            } else if (alphaJ === "9") {
+                temp.innerText = i
+            }
             //temp.innerText = infoID;
 
             /*const tempImage = document.createElement('img');
@@ -66,8 +76,9 @@ function addImages(cogInfo, cogFormat, cogArray, processImage) {
         };
 
         const cogRow = Math.floor(currentCog/12)+1;
-        const cogCol = (currentCog%12)+1; 
-        const imageId = cogRow + '-' + cogCol;
+        const cogCol = (currentCog%12)+1;
+        const alphaCol = (9+cogCol).toString(36).toUpperCase();
+        const imageId = cogRow + '-' + alphaCol;
 
         if(TESTING){
             console.log('Cogboard i: ' + i + '| OffsetI: ' + offsetI + '| i + offset: ' + parseInt(i + offset));

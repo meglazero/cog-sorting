@@ -328,6 +328,7 @@ export function processLocation(element, i, cogFormat, cogArray) {
     const cogSlice = cogFormat[currentCog].slice(0,3);
     const cogRow = Math.floor(currentCog/12)+1
     const cogCol = (currentCog%12)+1
+    const alphaCogCol = (9+cogCol).toString(36).toUpperCase()
     const elements = []
     //const locationElement = element.getElementById('cog-location');
 
@@ -346,7 +347,7 @@ export function processLocation(element, i, cogFormat, cogArray) {
                 temp.innerText = 'Col:';
                 break;
             case 3:
-                temp.innerText = cogCol;
+                temp.innerText = alphaCogCol;
                 break;
         };
         element.appendChild(temp);
