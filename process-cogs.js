@@ -132,7 +132,6 @@ export function processImage(element,i,cogInfo,cogFormat,cogArray,TESTING = fals
             console.log(element);
         };
         //need to make this display a player head in the slot
-        console.log(cogFormat[currentCog])
         const fullVariablePlayerName = cogFormat[currentCog]
         const playerName = fullVariablePlayerName.slice(7,fullVariablePlayerName.length)
         element.innerText = playerName;
@@ -292,27 +291,26 @@ export function processImage(element,i,cogInfo,cogFormat,cogArray,TESTING = fals
     } else if (fileTier === "Yin") {
         try{
             let directionalInput = "";
-            console.log(parseInt(cogLevel));
             switch(parseInt(cogLevel)) {
                 case 0:
                     directionalInput = "_Top_Left_";
                     break;
                 case 1:
                     directionalInput = "_Top_Right_";
-                    element.style = "padding-left: 2px;"
+                    element.classList.add("pad-left-2px");
                     break;
                 case 2:
                     directionalInput = "_Bottom_Left_";
-                    element.style = "padding-top: 2px;"
+                    element.classList.add("pad-top-2px");
                     break;
                 case 3:
                     directionalInput = "_Bottom_Right_";
-                    element.style = "padding-top: 2px; padding-left: 2px;"
+                    element.classList.add("pad-top-2px");
+                    element.classList.add("pad-left-2px");
                     break;
             };
             const imagePath = "Img/"+fileTier+directionalInput+"Cog"+".png";
             imgElement.src = imagePath;
-            console.log(imagePath);
             if(TESTING){
             };
         } catch (e) {

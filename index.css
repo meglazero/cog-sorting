@@ -214,6 +214,14 @@ div.cog-list > div:nth-of-type(even) .directional-title {
     color:var(--light);
 }
 
+#cogboard div.pad-left-2px {
+    padding-left: 2px;
+}
+
+#cogboard div.pad-top-2px {
+    padding-top: 2px;
+}
+
 #cogboard div:first-child {
     border: none;
     visibility: none;
