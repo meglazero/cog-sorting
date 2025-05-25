@@ -24,7 +24,7 @@ export function processBonuses(element,i,cogInfo,cogArray) {
     };
 
     try {
-        if(currentCog.a > 0) {
+        if(currentCog.a !== undefined) {
             if(TESTING){
                 console.log("a count++");
             };
@@ -35,7 +35,7 @@ export function processBonuses(element,i,cogInfo,cogArray) {
         console.log("Failed finding bonus a");
     };
     try {
-        if(currentCog.c > 0) {
+        if(currentCog.c !== undefined) {
             if(TESTING){
                 console.log("c count++");
             };
@@ -46,7 +46,7 @@ export function processBonuses(element,i,cogInfo,cogArray) {
         console.log("Failed finding bonus b");
     }
     try {
-        if(currentCog.d > 0) {
+        if(currentCog.d !== undefined) {
             if(TESTING){
                 console.log("d count++");
             };

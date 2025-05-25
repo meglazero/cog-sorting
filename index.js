@@ -110,30 +110,63 @@ function sortCogs(value) {
         console.log(directionalCheckbox.checked)
     }
 
+    let missingInfo = true;
+
     for (var cogs in cogsM) {
         if(parseInt(cogs) > 95) {
             break;
         }
-        for (var info in cogsM[cogs]) {
-            if (TESTING) {
-                console.log(cogsO[cogs]);
-            };
-            if (info == possibleSorts[value]) {
-                if (TESTING) {
-                    console.log(cogs + ' contains value f');
-                }
-                const cogTierSlice = cogsO[cogs].slice(3,4);
-                if(!(cogTierSlice === 'Y' || cogTierSlice === 'Z')){
-                    if(!(directionalCheckbox.checked)) {
-                        if(!(directionalDoubles.includes(cogsO[cogs].slice(4,6)))){
-                            sortable.push([cogs, cogsM[cogs][info]]);
-                        }
-                    } else {
-                        sortable.push([cogs, cogsM[cogs][info]])
-                    }
-                };
+
+        if (TESTING) {
+            console.log(cogsO[cogs]);
+        };
+
+        const cogTierSlice = cogsO[cogs].slice(3,4);
+        if (cogTierSlice === 'Y' || cogTierSlice === 'Z' || cogTierSlice === 'y') {
+            continue;
+        }
+
+        if(!(directionalCheckbox.checked)) {
+            if(directionalDoubles.includes(cogsO[cogs].slice(4,6))){
+                continue;
             };
         };
+
+        missingInfo = true;
+        
+        for (var info in cogsM[cogs]) {
+            if (TESTING) {
+                console.log(info);
+            }
+            if (info == possibleSorts[value]) {
+                if (TESTING) {
+                    console.log(cogs + ' contains value ' + possibleSorts[value]);
+                }
+
+                sortable.push([cogs, cogsM[cogs][info]])
+                missingInfo = false;
+                break;
+            };
+        };
+        if (value !== 'dBR' || value !== 'dEXP') {
+            if (missingInfo) {
+                if (TESTING) {
+                    console.log('Cog #' + cogs + ' was included in sort but missing the value you\'re sorting for')
+                    console.log(cogsM[cogs])
+                }
+                cogsM[cogs][possibleSorts[value]] = 0;
+                sortable.push([cogs, cogsM[cogs][possibleSorts[value]]]);
+
+                if (TESTING) {
+                    console.log('Repeated after adding value to verify it working')
+                    console.log(cogsM[cogs])
+                    console.log(sortable[sortable.length-1])
+                }
+            }
+        }
+        /*
+        this should work to add a 0 value to whichever value you're searching for, just need to figure out how to add it only to things that are missing it
+        */
     };
 
     sortable.sort(function(a, b) {
@@ -174,12 +207,12 @@ function processCogDivs(cogList, cogInfo, cogFormat, cogArray) {
     }
     
     for(let i = 0; i < forLength; i++) {
+        const currentCog = cogArray[i][0]
         if(TESTING && i === 0){
             console.log(cogFormat)
             console.log('Entered for loop');
             console.log(cogFormat[currentCog])
         };
-        const currentCog = cogArray[i][0]
         if(cogFormat[currentCog].slice(0,3) !== 'Cog') {
             continue;
         }
